@@ -1,2 +1,2 @@
 # d3-demo
-streaming imdv top 250 data visualization
+streaming imdb top 250 data visualization
