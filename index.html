@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<!-- 
+
+To overcome crossdomain issue:
+
+Run "python -m SimpleHTTPServer 8888 &" from within the site directory
+Once this is running, go to "http://localhost:8888/"
+
+-->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Streaming the IMDB Top 250</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    </head>
+    <body>
+        <div id="title"><h2>Streaming the</h2><br/><h1>IMDB TOP 250</h1></div>
+        <div id="list">
+            <header id="list-header">
+                <h2>TITLES</h2>
+                <div id="list-input">
+                    <input type="checkbox" id="select-all"/>
+                    <label>Select All</label>
+                </div>
+            </header>
+            <nav id="list-nav"></nav>
+        </div>
+        <div id="scatter-chart"></div>
+        <div id="bar-chart"></div>
+    	<div id="map-chart"></div>
+        
+        <div class = "description" id="description-left">
+            <h2>Instructions</h2>
+            <p>All ares of this visualization are designed to be explored by the user.  By default, this page shows the total views of the IMDb top 250 films as streamed by 1Channel.ch.  Interacting with the titles list will filter the data and update all views.  Individual titles can be selected by clicking, multiple by click-drag.  More granular selections made by command or control clicks.  The scatter plot supports brushing and seletion of indiviudal titles.  Both the map and bar chart will highlight individual elements and present more detailed site information<br/>
+            </p>
+        </div>
+        <div class = "description" id="description-center">
+            <h2>Description</h2>
+            <p>If we are to draw informed conclusions about the issue of online piracy, we need to better understand the darker corners of the web that are contributing to it.  This project explores a content-indexing website, <b>1channel.ch</b>.  Among the many sites that provide similar information, 1channel.ch had the highest Alexa rank in the US(297, 167).  Users on 1channel.ch can access over 49,000 movies and over 6,000 TV shows, all for “free.”  Some of the most popular movies on the site have over 1,000,000 views.  We are going to be scraping 1channel.ch for the top 250 films on IMDB, using a Python script.  At a very high level, our script will do the following:  Retrieve the top 250 films from IMDB. Open 1channel.ch and build a search string for the movie.  Open the search results page and grab the appropriate movie data.  Retrieve the list of third party links and the number of times they have been viewed.  More details about our project, the processm, and design decisions can be found in our <a href="https://docs.google.com/document/d/1tRI7_RYkCqK5cnoKVqw5LYoqQIca1e9ggN93LyAZ3Z0/edit" target="_blank">process book</a>.
+            </p>
+        </div> 
+        <div class = "description" id="description-right">
+            <h2>Video</h2>
+            <iframe width="220" height="165" src="http://www.youtube.com/embed/V8CljTt0UhI"></iframe>
+        </div>
+        <footer>© 2013 - Rob Acheson and Jeff Fontas</footer>
+        <script type="text/javascript" src="js/d3.v3.min.js"></script>
+        <script type="text/javascript" src="js/d3.geo.projection.v0.min.js"></script>
+        <script type="text/javascript" src="js/topojson.v0.min.js"></script>
+    	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    	<script type="text/javascript" src="js/jquery-ui.js"></script>
+    	
+    	<script src="js/list.js"></script>
+    	<script src="js/map.js"></script>
+    	<script src="js/bar.js"></script>
+    	<script src="js/scatter.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

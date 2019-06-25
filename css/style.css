@@ -1,0 +1,311 @@
+/*
+	CS171 - Project 2
+	Rob Acheson
+	Jeff Fontas
+*/
+
+/*http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html*/
+/*http://stackoverflow.com/questions/2212542/how-can-i-prevent-selecting-text-in-google-chrome*/
+
+
+/* CSS Reset * /
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 00;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    background: transparent;
+}
+/* end meyerweb.com reset code */
+
+
+/* GLOBAL CSS */
+/*
+	Trying to mimic that of D3.
+	http://d3js.org/style.css    
+*/
+html {
+	min-width: 1280px;
+	
+	user-select: none;
+   	-o-user-select:none;
+   	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+
+body {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+	margin: 1em auto 4em auto;
+	text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: 52px;
+  font-weight: 300;
+  letter-spacing: -2px;
+  margin-top: -20px;
+}
+
+h2 {
+	font-size: 24px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 260px;                  
+  height: 80px;                 
+  pointer-events: none;  
+  font-size: 12pt;       
+}
+
+/************* TITLE ****************/
+#title {
+	width: 340px;
+	height: 100px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}
+/************************************/
+
+/*************** LIST ***************/
+#list {
+	width: 340px;
+	height: 340px;
+	position: absolute;
+	top: 140px;
+	left: 20px;
+	/*overflow: scroll;*/
+    font-size: 12px;
+}
+
+#list-header {
+	color: #AAA;
+}
+
+#list-header h2 {
+	color: #AAA;
+	display: inline;
+}
+
+#list-input {
+	vertical-align: text-bottom;
+	display: inline;
+	float: right;
+	margin-top: 6px;
+}
+
+#list-nav {
+	width: 340px;
+	height: 300px;
+	position: absolute;
+	top: 40px;
+	overflow: scroll;
+}
+
+#select-all {	
+	/*	color: red;*/
+}
+
+#selectable .ui-selecting {
+	background: #EEE;
+	color: red;
+	opacity: 1.0;
+}
+
+#selectable .ui-selected {
+	background: #EEE;
+	color: red;
+	opacity: 0.8;
+}
+
+#selectable { 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0;
+	color: #999;
+}
+/**************************************/
+
+
+/* SCATTERPLOT */
+#scatter-chart {
+	width: 340px;
+	height: 220px;
+	position: absolute;
+	top: 500px;
+	left: 20px;
+	background: #fff;
+}
+
+circle#scatter-chart  {
+    -webkit-transition: fill-opacity 250ms linear;
+}
+
+
+.scatterAxis text {
+    font-size: 10px;
+}
+.scatterAxis path, .scatterAxis line {
+  fill: none;
+  stroke: gray;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+
+}
+.selecting circle {
+  fill-opacity: .2;
+}
+
+#scatter-chart .label {
+    font-size: 12px;
+}
+
+.selecting circle.selected {
+  stroke: #f00;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+
+/******************* MAP *********************/
+#map-chart {
+	width: 880px;
+	height: 460px;
+	position: absolute;
+	top: 20px;
+	left: 380px;
+	border: 1px solid #AAA;
+}
+
+#land {
+  	fill: #ccc;
+}
+
+#land .active {
+	fill: #666;
+} 
+
+#boundary {
+  	fill: none;
+  	stroke: #fff;
+	stroke-width: 0.5px;
+}
+/*********************************************/
+
+
+/* BAR CHART */
+#bar-chart {
+	width: 880px;
+	height: 220px;
+	position: absolute;
+	top: 500px;
+	left: 380px;
+}
+
+
+#bar-chart .barAxis {
+    /*font-family: "Helvetica Neue", Helvetica, sans-serif;*/
+    font-size: 10px;
+    /*font-style: normal;*/
+    fill: none;
+    stroke: gray;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+#bar-chart .barAxisLine {
+    stroke: #eee;
+}
+
+
+
+/* Description */
+.description {
+	border-top: 1px solid #CCC;
+	font-size: 14px;
+	padding-bottom: 20px;
+}
+
+.description h2 {
+	font-size: 24px;
+}
+
+.description h3 {
+	font-size: 18px;
+}
+
+#description-left {
+	
+	border-top: 1px solid #CCC;
+	width: 340px;
+	height: 220px;
+	position: absolute;
+	top: 740px;
+	left: 20px;
+}
+
+#description-center {
+	border-top: 1px solid #CCC;
+	width: 620px;
+	height: 220px;
+	position: absolute;
+	top: 740px;
+	left: 380px;
+}
+
+#description-right {
+	border-top: 1px solid #CCC;
+	width: 240px;
+	height: 220px;
+	position: absolute;
+	top: 740px;
+	left: 1020px;
+}
+
+/* FOOTER */
+
+footer {
+	position: absolute;
+	top: 980px;
+	left: 550px;
+	width: 500px;
+	height: 50px;
+
+}
